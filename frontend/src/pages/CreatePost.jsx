@@ -104,7 +104,7 @@ const CreatePost = () => {
       console.log("Dữ liệu nháp gửi đi:", draftData);
 
       // Gọi API để lưu nháp
-      const API_URL = "http://localhost:5002/api";
+      const API_URL = "http://localhost:5000/api";
       const token = localStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
@@ -143,7 +143,7 @@ const CreatePost = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5002/api/categories"
+          "http://localhost:5000/api/categories"
         );
         if (response.data.success) {
           const categoryNames = response.data.data.map(
@@ -292,7 +292,7 @@ const CreatePost = () => {
 
       // Khởi tạo phiên upload mới
       const initResponse = await axios.post(
-        "http://localhost:5002/api/upload/init",
+        "http://localhost:5000/api/upload/init",
         {
           filename: file.name,
           fileSize: file.size,
@@ -329,7 +329,7 @@ const CreatePost = () => {
 
         // Gửi chunk lên server
         const chunkResponse = await axios.post(
-          "http://localhost:5002/api/upload/chunk",
+          "http://localhost:5000/api/upload/chunk",
           formData,
           {
             headers: {
@@ -349,7 +349,7 @@ const CreatePost = () => {
       setUploadProgress(95);
 
       const completeResponse = await axios.post(
-        "http://localhost:5002/api/upload/complete",
+        "http://localhost:5000/api/upload/complete",
         { uploadId },
         {
           headers: {

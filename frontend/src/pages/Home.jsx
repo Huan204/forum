@@ -113,7 +113,7 @@ const Home = () => {
   const formatUrl = (url) => {
     if (!url) return "";
     if (url.startsWith("http")) return url;
-    return `http://localhost:5002${url.startsWith("/") ? "" : "/"}${url}`;
+    return `http://localhost:5000${url.startsWith("/") ? "" : "/"}${url}`;
   };
 
   // Thêm hàm xử lý url video
@@ -132,7 +132,7 @@ const Home = () => {
       return thumbnailUrl;
     }
 
-    return `http://localhost:5002${
+    return `http://localhost:5000${
       thumbnailUrl.startsWith("/") ? "" : "/"
     }${thumbnailUrl}`;
   };
@@ -148,7 +148,7 @@ const Home = () => {
     e.stopPropagation();
     if (!post.video) return;
 
-    const getBaseUrl = () => "http://localhost:5002";
+    const getBaseUrl = () => "http://localhost:5000";
     const getThumbnailUrl = (path) => {
       if (!path) return null;
       if (path.startsWith("http")) return path;

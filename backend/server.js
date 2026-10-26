@@ -21,7 +21,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: ["http://localhost:3000", "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   },
@@ -29,7 +29,12 @@ const io = socketio(server, {
 
 // CORS Configuration
 const corsOptions = {
-  origin: ["http://localhost:3000", "http://localhost:3001"],
+  origin: (origin, callback) => {
+    if (!origin || /^https?:\/\/localhost:\d+$/.test(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Origin không được phép"));
+  },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 200,
@@ -356,7 +361,7 @@ io.on("connection", (socket) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, "0.0.0.0", (err) => {
   if (err) {
     console.error(`Không thể khởi động server: ${err.message}`);
@@ -365,7 +370,7 @@ server.listen(PORT, "0.0.0.0", (err) => {
   console.log(`Server đang chạy trên port ${PORT}`);
   console.log(`Môi trường: ${process.env.NODE_ENV || "development"}`);
   console.log(`MongoDB: ${process.env.DATABASE_URL}`);
-  console.log(`Frontend URL: http://localhost:3001`);
+  console.log(`Frontend URL: http://localhost:3000`);
 });
 
 // Handle unexpected errors

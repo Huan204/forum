@@ -3,11 +3,11 @@
  */
 
 // URL của API backend
-export const API_URL = "http://localhost:5002";
-export const API_BASE_URL = "http://localhost:5002/api";
+export const API_URL = "http://localhost:5000";
+export const API_BASE_URL = "http://localhost:5000/api";
 
 // URL của frontend
-export const FRONTEND_URL = "http://localhost:3001";
+export const FRONTEND_URL = "http://localhost:3000";
 
 // Cấu hình JWT
 export const JWT_EXPIRATION = "30d";

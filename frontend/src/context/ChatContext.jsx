@@ -279,7 +279,7 @@ export const ChatProvider = ({ children }) => {
     if (!user || !token) return;
 
     // Kết nối socket.io với địa chỉ cụ thể
-    const SOCKET_URL = "http://localhost:5002"; // Địa chỉ trực tiếp đến server
+    const SOCKET_URL = "http://localhost:5000"; // Địa chỉ trực tiếp đến server
     console.log("Đang kết nối Socket.IO đến:", SOCKET_URL);
 
     const newSocket = io(SOCKET_URL, {
@@ -489,7 +489,7 @@ export const ChatProvider = ({ children }) => {
   const updateConversationList = async () => {
     try {
       // Thiết lập URL server API
-      const API_URL = "http://localhost:5002";
+      const API_URL = "http://localhost:5000";
       console.log(
         "Lấy danh sách đoạn chat từ:",
         `${API_URL}/api/messages/conversations`
@@ -529,7 +529,7 @@ export const ChatProvider = ({ children }) => {
 
     try {
       // Thiết lập URL server API
-      const API_URL = "http://localhost:5002";
+      const API_URL = "http://localhost:5000";
 
       // Lấy lịch sử tin nhắn
       const response = await axios.get(
@@ -579,7 +579,7 @@ export const ChatProvider = ({ children }) => {
       } else {
         // Fallback nếu socket không hoạt động
         console.log("Socket không hoạt động, gửi tin nhắn qua API");
-        const API_URL = "http://localhost:5002";
+        const API_URL = "http://localhost:5000";
         const response = await axios.post(
           `${API_URL}/api/messages`,
           {
@@ -612,7 +612,7 @@ export const ChatProvider = ({ children }) => {
 
     try {
       console.log("Bắt đầu gửi ảnh, số lượng:", imageFiles.length);
-      const API_URL = "http://localhost:5002";
+      const API_URL = "http://localhost:5000";
       const formData = new FormData();
 
       // Thêm nhiều file ảnh vào FormData
@@ -727,7 +727,7 @@ export const ChatProvider = ({ children }) => {
 
     try {
       console.log("Bắt đầu gửi file:", file.name, `(${file.size} bytes)`);
-      const API_URL = "http://localhost:5002";
+      const API_URL = "http://localhost:5000";
       const formData = new FormData();
 
       // Thêm file vào FormData
@@ -935,7 +935,7 @@ export const ChatProvider = ({ children }) => {
   // Đánh dấu tất cả tin nhắn là đã đọc
   const markAllAsRead = async () => {
     try {
-      const API_URL = "http://localhost:5002";
+      const API_URL = "http://localhost:5000";
 
       await axios.put(
         `${API_URL}/api/messages/mark-all-read`,

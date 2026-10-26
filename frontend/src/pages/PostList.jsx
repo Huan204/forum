@@ -14,10 +14,10 @@ import {
 // Thêm hàm helper để lấy API URL
 const getBaseUrl = () => {
   try {
-    return process.env.REACT_APP_API_BASE_URL || "http://localhost:5002"; // URL mặc định
+    return process.env.REACT_APP_API_BASE_URL || "http://localhost:5000"; // URL mặc định
   } catch (error) {
     console.error("Lỗi khi lấy URL:", error);
-    return "http://localhost:5002"; // URL mặc định
+    return "http://localhost:5000"; // URL mặc định
   }
 };
 

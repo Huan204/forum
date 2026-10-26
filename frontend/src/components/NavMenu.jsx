@@ -233,7 +233,7 @@ const NavMenu = () => {
   const getAvatarUrl = (avatarPath) => {
     if (!avatarPath) return "/images/default-avatar.png"; // Ảnh mặc định
     if (avatarPath.startsWith("http")) return avatarPath;
-    return `http://localhost:5002${
+    return `http://localhost:5000${
       avatarPath.startsWith("/") ? "" : "/"
     }${avatarPath}`;
   };

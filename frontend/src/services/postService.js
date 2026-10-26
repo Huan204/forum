@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5002/api";
+const API_URL = "http://localhost:5000/api";
 
 // Hàm trợ giúp để lấy token từ localStorage
 const getAuthToken = () => {
@@ -38,7 +38,7 @@ const formatVideoUrl = (videoUrl) => {
   }
 
   // Đảm bảo URL đầy đủ
-  const apiUrl = "http://localhost:5002"; // Hoặc lấy từ process.env.REACT_APP_API_URL
+  const apiUrl = "http://localhost:5000"; // Hoặc lấy từ process.env.REACT_APP_API_URL
 
   // Log để debug
   console.log("Đang format video URL:", videoUrl);

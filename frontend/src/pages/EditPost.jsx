@@ -75,14 +75,14 @@ const EditPost = () => {
   const formatUrl = (url) => {
     if (!url) return "";
     if (url.startsWith("http")) return url;
-    return `http://localhost:5002${url.startsWith("/") ? "" : "/"}${url}`;
+    return `http://localhost:5000${url.startsWith("/") ? "" : "/"}${url}`;
   };
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5002/api/categories"
+          "http://localhost:5000/api/categories"
         );
         if (response.data.success) {
           const categoryNames = response.data.data.map(
@@ -313,7 +313,7 @@ const EditPost = () => {
 
       // Khởi tạo phiên upload mới
       const initResponse = await axios.post(
-        "http://localhost:5002/api/upload/init",
+        "http://localhost:5000/api/upload/init",
         {
           filename: file.name,
           fileSize: file.size,
@@ -350,7 +350,7 @@ const EditPost = () => {
 
         // Gửi chunk lên server
         const chunkResponse = await axios.post(
-          "http://localhost:5002/api/upload/chunk",
+          "http://localhost:5000/api/upload/chunk",
           formData,
           {
             headers: {
@@ -370,7 +370,7 @@ const EditPost = () => {
       setUploadProgress(95);
 
       const completeResponse = await axios.post(
-        "http://localhost:5002/api/upload/complete",
+        "http://localhost:5000/api/upload/complete",
         { uploadId },
         {
           headers: {

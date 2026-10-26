@@ -5,7 +5,7 @@ import { File, Download } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 // Hằng số cho URL server backend
-const API_BASE_URL = "http://localhost:5002";
+const API_BASE_URL = "http://localhost:5000";
 const DEFAULT_ERROR_IMAGE = "/default_avatar.png";
 
 const ChatMessage = ({

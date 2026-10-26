@@ -22,7 +22,7 @@ const formatVideoUrl = (videoUrl) => {
   }
 
   // Thêm domain API nếu là đường dẫn tương đối
-  const apiUrl = "http://localhost:5002";
+  const apiUrl = "http://localhost:5000";
   return videoUrl.startsWith("/")
     ? `${apiUrl}${videoUrl}`
     : `${apiUrl}/${videoUrl}`;

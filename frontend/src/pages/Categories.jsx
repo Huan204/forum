@@ -29,7 +29,7 @@ const PostCard = ({ post }) => {
   };
 
   const getBaseUrl = () => {
-    return "http://localhost:5002"; // Thay đổi URL backend nếu cần
+    return "http://localhost:5000"; // Thay đổi URL backend nếu cần
   };
 
   const getThumbnailUrl = (path) => {
@@ -319,7 +319,7 @@ const Categories = () => {
     e.stopPropagation();
     if (!post.video) return;
 
-    const getBaseUrl = () => "http://localhost:5002";
+    const getBaseUrl = () => "http://localhost:5000";
     const getThumbnailUrl = (path) => {
       if (!path) return null;
       if (path.startsWith("http")) return path;
@@ -390,7 +390,7 @@ const Categories = () => {
   const fetchCategories = async () => {
     try {
       setLoadingCategories(true);
-      const response = await axios.get("http://localhost:5002/api/categories");
+      const response = await axios.get("http://localhost:5000/api/categories");
 
       if (
         response.data &&
@@ -416,11 +416,11 @@ const Categories = () => {
   const fetchCategoryPosts = async () => {
     try {
       setLoading(true);
-      let url = "http://localhost:5002/api/posts";
+      let url = "http://localhost:5000/api/posts";
 
       if (decodedCategory) {
         // Nếu có danh mục, lọc bài viết theo danh mục
-        url = `http://localhost:5002/api/posts?category=${encodeURIComponent(
+        url = `http://localhost:5000/api/posts?category=${encodeURIComponent(
           decodedCategory
         )}`;
       }

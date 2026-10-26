@@ -11,15 +11,15 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 3001,
-    strictPort: true,
+    port: 3000,
+    strictPort: false,
     host: true,
     hmr: {
       overlay: true,
     },
     proxy: {
       "/api": {
-        target: "http://localhost:5002",
+        target: "http://localhost:5000",
         changeOrigin: true,
         secure: false,
       },
@@ -55,12 +55,12 @@ export default defineConfig({
     force: true,
   },
   define: {
-    "process.env.VITE_API_URL": JSON.stringify("http://localhost:5002/api"),
+    "process.env.VITE_API_URL": JSON.stringify("http://localhost:5000/api"),
     "process.env.VITE_API_URL_CATEGORIES": JSON.stringify(
-      "http://localhost:5002/api/categories"
+      "http://localhost:5000/api/categories"
     ),
     "process.env.REACT_APP_API_URL": JSON.stringify(
-      "http://localhost:5002/api"
+      "http://localhost:5000/api"
     ),
   },
 });

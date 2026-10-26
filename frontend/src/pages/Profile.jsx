@@ -302,7 +302,7 @@ const Profile = () => {
 
       // Gọi API trực tiếp thay vì qua updateProfile của context
       const response = await axios.put(
-        "http://localhost:5002/api/users/profile",
+        "http://localhost:5000/api/users/profile",
         dataToUpdate,
         {
           headers: {

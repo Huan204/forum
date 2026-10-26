@@ -48,10 +48,10 @@ const styleContent = `
 // Lấy base URL của API
 const getApiBaseUrl = () => {
   try {
-    return process.env.REACT_APP_API_BASE_URL || "http://localhost:5002";
+    return process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
   } catch (error) {
     console.error("Lỗi khi lấy API base URL:", error);
-    return "http://localhost:5002"; // URL mặc định khi xảy ra lỗi
+    return "http://localhost:5000"; // URL mặc định khi xảy ra lỗi
   }
 };
 
@@ -585,7 +585,7 @@ const PostDetail = () => {
         console.log("Đang gọi API xóa bình luận...");
 
         // Tạo URL API để hiển thị rõ ràng
-        const apiUrl = `http://localhost:5002/api/comments/${commentId}`;
+        const apiUrl = `http://localhost:5000/api/comments/${commentId}`;
         console.log("URL API xóa bình luận:", apiUrl);
         console.log("Header gửi đi:", {
           Authorization: `Bearer ${token.substring(0, 15)}...`,
@@ -980,7 +980,7 @@ const PostDetail = () => {
         toast.info("Đang xóa bài viết...");
 
         // Sử dụng trực tiếp fetch để có thể theo dõi quá trình xóa tốt hơn
-        const response = await fetch(`http://localhost:5002/api/posts/${id}`, {
+        const response = await fetch(`http://localhost:5000/api/posts/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -1256,7 +1256,7 @@ Không thể xóa bài viết. Chi tiết lỗi:
       if (token && (!userId || !role || !username)) {
         try {
           console.log("Đang đồng bộ thông tin người dùng từ token...");
-          const response = await fetch("http://localhost:5002/api/auth/me", {
+          const response = await fetch("http://localhost:5000/api/auth/me", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -1768,7 +1768,7 @@ Không thể xóa bài viết. Chi tiết lỗi:
                                         hasToken: !!token,
                                       });
 
-                                      const apiUrl = `http://localhost:5002/api/comments/${comment._id}`;
+                                      const apiUrl = `http://localhost:5000/api/comments/${comment._id}`;
                                       console.log(
                                         "Gửi request xóa trực tiếp tới:",
                                         apiUrl

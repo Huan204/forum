@@ -516,7 +516,7 @@ const ChatMessages = ({ showReadStatus = true }) => {
               // Đảm bảo URL ảnh đúng định dạng
               let imageUrl = img.url;
               if (!imageUrl.startsWith("http")) {
-                imageUrl = `http://localhost:5002${img.url}`;
+                imageUrl = `http://localhost:5000${img.url}`;
               }
 
               console.log("Hiển thị ảnh với URL:", imageUrl);
@@ -560,7 +560,7 @@ const ChatMessages = ({ showReadStatus = true }) => {
       // Đảm bảo URL file đúng định dạng
       let fileUrl = message.file.url;
       if (!fileUrl.startsWith("http")) {
-        fileUrl = `http://localhost:5002${message.file.url}`;
+        fileUrl = `http://localhost:5000${message.file.url}`;
       }
 
       console.log("Hiển thị file với URL:", fileUrl);
