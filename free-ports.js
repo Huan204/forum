@@ -1,53 +1,29 @@
-const { exec } = require("child_process");
+const { execFile } = require("child_process");
 
-// Danh sách cổng cần kiểm tra và giải phóng
 const ports = [3000, 5000];
 
-// Kiểm tra và giải phóng các cổng trên Windows
+if (process.platform !== "win32") {
+  console.log("Bỏ qua giải phóng cổng: môi trường không phải Windows.");
+  process.exit(0);
+}
+
 ports.forEach((port) => {
-  console.log(`Kiểm tra cổng ${port}...`);
+  execFile("netstat", ["-ano"], (error, stdout) => {
+    if (error) return;
 
-  // Lệnh để tìm process đang sử dụng cổng
-  const findCommand = `netstat -ano | findstr :${port}`;
+    const line = stdout
+      .split(/\r?\n/)
+      .find((entry) => entry.includes(`:${port}`));
+    const pid = line?.trim().split(/\s+/).pop();
 
-  exec(findCommand, (error, stdout, stderr) => {
-    if (error) {
-      console.log(`Không tìm thấy process nào sử dụng cổng ${port}`);
-      return;
-    }
+    if (!pid || pid === "PID") return;
 
-    if (stdout) {
-      // Tìm PID từ output
-      const lines = stdout.trim().split("\n");
-
-      if (lines.length > 0) {
-        try {
-          // Lấy PID từ dòng đầu tiên (cột cuối cùng)
-          const pid = lines[0].trim().split(/\s+/).pop();
-
-          if (pid && pid !== "PID") {
-            console.log(`Đang giải phóng cổng ${port} (PID: ${pid})...`);
-
-            // Lệnh để kill process
-            exec(
-              `taskkill /F /PID ${pid}`,
-              (killError, killStdout, killStderr) => {
-                if (killError) {
-                  console.log(
-                    `Không thể kill process với PID ${pid}: ${killError.message}`
-                  );
-                } else {
-                  console.log(`Đã giải phóng cổng ${port}`);
-                }
-              }
-            );
-          }
-        } catch (e) {
-          console.log(`Lỗi xử lý output cho cổng ${port}: ${e.message}`);
-        }
+    execFile("taskkill", ["/F", "/PID", pid], (killError) => {
+      if (killError) {
+        console.log(`Không thể giải phóng cổng ${port}: ${killError.message}`);
+      } else {
+        console.log(`Đã giải phóng cổng ${port}`);
       }
-    } else {
-      console.log(`Không tìm thấy process nào sử dụng cổng ${port}`);
-    }
+    });
   });
 });
