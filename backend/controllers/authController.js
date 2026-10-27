@@ -5,18 +5,25 @@ const User = require("../models/User");
 // @access  Public
 exports.register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const usernameValue = typeof req.body.username === "string" ? req.body.username.trim() : "";
+    const emailValue = typeof req.body.email === "string" ? req.body.email.trim().toLowerCase() : "";
+    const passwordValue = typeof req.body.password === "string" ? req.body.password : "";
 
-    // Kiểm tra dữ liệu đầu vào
-    if (!username || !email || !password) {
-      return res.status(400).json({
-        success: false,
-        error: "Vui lòng cung cấp đầy đủ thông tin đăng ký",
-      });
+    if (!usernameValue || !emailValue || !passwordValue) {
+      return res.status(400).json({ success: false, error: "Vui lòng cung cấp đầy đủ thông tin đăng ký" });
+    }
+    if (usernameValue.length < 3 || usernameValue.length > 30) {
+      return res.status(400).json({ success: false, error: "Tên người dùng phải từ 3 đến 30 ký tự" });
+    }
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(emailValue)) {
+      return res.status(400).json({ success: false, error: "Vui lòng nhập email hợp lệ" });
+    }
+    if (passwordValue.length < 6) {
+      return res.status(400).json({ success: false, error: "Mật khẩu phải có ít nhất 6 ký tự" });
     }
 
     // Kiểm tra email đã tồn tại
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ email: emailValue });
     if (userExists) {
       return res.status(400).json({
         success: false,
@@ -25,7 +32,7 @@ exports.register = async (req, res) => {
     }
 
     // Kiểm tra username đã tồn tại
-    const usernameExists = await User.findOne({ username });
+    const usernameExists = await User.findOne({ username: usernameValue });
     if (usernameExists) {
       return res.status(400).json({
         success: false,
@@ -35,19 +42,20 @@ exports.register = async (req, res) => {
 
     // Tạo người dùng mới
     const user = await User.create({
-      username,
-      email,
-      password,
+      username: usernameValue,
+      email: emailValue,
+      password: passwordValue,
     });
 
     // Gửi response với token
     sendTokenResponse(user, 201, res);
   } catch (error) {
-    console.error("Lỗi đăng ký:", error);
-    res.status(500).json({
-      success: false,
-      error: "Lỗi server khi đăng ký người dùng",
-    });
+    if (error?.code === 11000) {
+      const duplicateField = Object.keys(error.keyPattern || {})[0];
+      return res.status(409).json({ success: false, error: duplicateField === "username" ? "Tên người dùng đã được sử dụng" : "Email đã được sử dụng" });
+    }
+    console.error("Lỗi đăng ký:", error.message);
+    return res.status(500).json({ success: false, error: "Lỗi server khi đăng ký người dùng" });
   }
 };
 

@@ -87,11 +87,12 @@ export const AuthProvider = ({ children }) => {
       if (result.success) {
         return true;
       } else {
-        setError(result.error || "Đăng ký thất bại");
-        return false;
+        setUser(null);
+        setIsAuthenticated(false);
+        setError(result.error || "Lỗi xác thực");
       }
     } catch (err) {
-      setError(err.error || "Đăng ký thất bại");
+      setError(err.error || err.message || "Đăng ký thất bại");
       return false;
     } finally {
       setLoading(false);
@@ -138,7 +139,7 @@ export const AuthProvider = ({ children }) => {
         return false;
       }
     } catch (err) {
-      setError(err.error || "Đăng nhập thất bại");
+      setError(err.error || err.message || "Đăng nhập thất bại");
       return false;
     } finally {
       setLoading(false);

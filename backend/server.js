@@ -369,7 +369,7 @@ server.listen(PORT, "0.0.0.0", (err) => {
   }
   console.log(`Server đang chạy trên port ${PORT}`);
   console.log(`Môi trường: ${process.env.NODE_ENV || "development"}`);
-  console.log(`MongoDB: ${process.env.DATABASE_URL}`);
+  console.log("MongoDB: đã cấu hình kết nối");
   console.log(`Frontend URL: http://localhost:3000`);
 });
 
