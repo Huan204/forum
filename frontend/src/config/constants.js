@@ -2,12 +2,14 @@
  * Cấu hình môi trường
  */
 
-// URL của API backend
-export const API_URL = "http://localhost:5000";
-export const API_BASE_URL = "http://localhost:5000/api";
+// URL của API backend. Khi chạy qua Vite, request tương đối sẽ đi qua proxy
+// và hoạt động đúng cả trong preview lẫn trên localhost.
+const configuredApiOrigin = import.meta.env.VITE_API_ORIGIN?.replace(/\/$/, "");
+export const API_URL = configuredApiOrigin || "";
+export const API_BASE_URL = `${API_URL}/api`;
 
 // URL của frontend
-export const FRONTEND_URL = "http://localhost:3000";
+export const FRONTEND_URL = window.location.origin;
 
 // Cấu hình JWT
 export const JWT_EXPIRATION = "30d";
