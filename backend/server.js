@@ -10,7 +10,8 @@ const socketio = require("socket.io");
 const jwt = require("jsonwebtoken");
 const User = require("./models/User");
 
-// Load environment variables
+// Load the project environment in v0 previews, then allow a local backend/.env to override it.
+dotenv.config({ path: process.env.ENV_FILE || "/vercel/share/.env.project" });
 dotenv.config();
 
 // Connect to database

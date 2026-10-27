@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
-  const databaseUrl = process.env.DATABASE_URL || process.env.MONGO_URI;
+  const databaseUrl =
+    process.env.DATABASE_URL || process.env.MONGODB_URI || process.env.MONGO_URI;
 
   if (!databaseUrl) {
     console.error(
