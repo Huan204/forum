@@ -20,9 +20,28 @@ connectDB();
 // Initialize express app
 const app = express();
 const server = http.createServer(app);
+
+const configuredOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.VITE_FRONTEND_URL,
+  process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
+]
+  .filter(Boolean)
+  .map((origin) => origin.replace(/\/$/, ""));
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+  if (/^https?:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)) return true;
+  if (configuredOrigins.includes(origin)) return true;
+  return /^https:\/\/([a-z0-9-]+\.)*vercel\.app$/.test(origin);
+};
+
 const io = socketio(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:3000"],
+    origin: (origin, callback) => {
+      if (isAllowedOrigin(origin)) return callback(null, true);
+      return callback(new Error("Origin không được phép"));
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   },
@@ -31,9 +50,7 @@ const io = socketio(server, {
 // CORS Configuration
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || /^https?:\/\/localhost:\d+$/.test(origin)) {
-      return callback(null, true);
-    }
+    if (isAllowedOrigin(origin)) return callback(null, true);
     return callback(new Error("Origin không được phép"));
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
