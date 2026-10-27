@@ -169,9 +169,9 @@ const Register = () => {
     try {
       // Không gửi confirmPassword lên server
       const { confirmPassword, ...registerData } = formData;
-      const success = await register(registerData);
+      const result = await register(registerData);
 
-      if (success) {
+      if (result?.success) {
         setSuccess(true);
         // Đợi hiệu ứng hoàn thành trước khi chuyển trang
         setTimeout(() => {
@@ -179,7 +179,7 @@ const Register = () => {
           navigate("/login");
         }, 1500);
       } else {
-        setFormError(error || "Đăng ký thất bại, vui lòng thử lại");
+        setFormError(result?.error || error || "Đăng ký thất bại, vui lòng thử lại");
       }
     } catch (err) {
       console.error("Lỗi khi đăng ký:", err);

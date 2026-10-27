@@ -85,12 +85,15 @@ export const AuthProvider = ({ children }) => {
       const result = await registerApi(userData);
 
       if (result.success) {
-        return true;
-      } else {
-        setUser(null);
-        setIsAuthenticated(false);
-        setError(result.error || "Lỗi xác thực");
+        setError(null);
+        return { success: true };
       }
+
+      const registrationError = result.error || "Đăng ký thất bại";
+      setUser(null);
+      setIsAuthenticated(false);
+      setError(registrationError);
+      return { success: false, error: registrationError };
     } catch (err) {
       setError(err.error || err.message || "Đăng ký thất bại");
       return false;

@@ -15,7 +15,7 @@ exports.register = async (req, res) => {
     if (usernameValue.length < 3 || usernameValue.length > 30) {
       return res.status(400).json({ success: false, error: "Tên người dùng phải từ 3 đến 30 ký tự" });
     }
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(emailValue)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
       return res.status(400).json({ success: false, error: "Vui lòng nhập email hợp lệ" });
     }
     if (passwordValue.length < 6) {
