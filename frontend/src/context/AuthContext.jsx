@@ -11,7 +11,7 @@ import {
 import { checkServerConnection } from "../services/api";
 
 // Tạo context để sử dụng trong toàn bộ ứng dụng
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   // State
@@ -248,8 +248,17 @@ export const AuthProvider = ({ children }) => {
 // Hook để sử dụng AuthContext
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth phải được sử dụng trong AuthProvider");
-  }
-  return context;
+  return (
+    context || {
+      user: null,
+      token: null,
+      loading: false,
+      error: null,
+      isAuthenticated: false,
+      apiConnected: false,
+      login: async () => ({ success: false, error: "AuthProvider chưa sẵn sàng" }),
+      register: async () => ({ success: false, error: "AuthProvider chưa sẵn sàng" }),
+      logout: () => {},
+    }
+  );
 };
