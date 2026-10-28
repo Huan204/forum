@@ -47,8 +47,7 @@ exports.register = async (req, res) => {
       password: passwordValue,
     });
 
-    // Gửi response với token
-    sendTokenResponse(user, 201, res);
+    return sendTokenResponse(user, 201, res);
   } catch (error) {
     if (error?.code === 11000) {
       const duplicateField = Object.keys(error.keyPattern || {})[0];
@@ -64,10 +63,10 @@ exports.register = async (req, res) => {
 // @access  Public
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const emailValue = typeof req.body.email === "string" ? req.body.email.trim().toLowerCase() : "";
+    const passwordValue = typeof req.body.password === "string" ? req.body.password : "";
 
-    // Kiểm tra email và password
-    if (!email || !password) {
+    if (!emailValue || !passwordValue) {
       return res.status(400).json({
         success: false,
         error: "Vui lòng cung cấp email và mật khẩu",
@@ -75,7 +74,7 @@ exports.login = async (req, res) => {
     }
 
     // Kiểm tra người dùng tồn tại
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email: emailValue }).select("+password");
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -84,7 +83,7 @@ exports.login = async (req, res) => {
     }
 
     // Kiểm tra mật khẩu
-    const isMatch = await user.matchPassword(password);
+    const isMatch = await user.matchPassword(passwordValue);
     if (!isMatch) {
       return res.status(401).json({
         success: false,

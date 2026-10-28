@@ -84,9 +84,19 @@ export const AuthProvider = ({ children }) => {
     try {
       const result = await registerApi(userData);
 
-      if (result.success) {
+      if (result.success && result.token) {
+        setToken(result.token);
+        setUser(result.user || null);
+        setIsAuthenticated(true);
         setError(null);
-        return { success: true };
+
+        if (result.user) {
+          localStorage.setItem("userId", result.user.id || result.user._id);
+          localStorage.setItem("username", result.user.username || "");
+          localStorage.setItem("role", result.user.role || "user");
+        }
+
+        return { success: true, token: result.token, user: result.user };
       }
 
       const registrationError = result.error || "Đăng ký thất bại";
@@ -95,8 +105,9 @@ export const AuthProvider = ({ children }) => {
       setError(registrationError);
       return { success: false, error: registrationError };
     } catch (err) {
-      setError(err.error || err.message || "Đăng ký thất bại");
-      return false;
+      const registrationError = err.error || err.message || "Đăng ký thất bại";
+      setError(registrationError);
+      return { success: false, error: registrationError };
     } finally {
       setLoading(false);
     }

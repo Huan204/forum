@@ -147,9 +147,16 @@ export const logout = async () => {
 export const getCurrentUser = async () => {
   try {
     const response = await api.get("/auth/me");
+    const { token, user } = response.data;
+    if (token) {
+      localStorage.setItem("token", token);
+    }
+
     return {
       success: true,
-      data: response.data.data,
+      token,
+      user,
+      data: response.data,
     };
   } catch (error) {
     console.error("Lỗi lấy thông tin người dùng:", error);
