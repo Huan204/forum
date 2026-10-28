@@ -104,14 +104,11 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    agreeTerms: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [success, setSuccess] = useState(false);
-
-  const handleGoogleSignIn = () => {
-    setFormError("Đăng nhập bằng Google chưa được cấu hình cho ứng dụng này.");
-  };
 
   // Redirect if already logged in
   useEffect(() => {
@@ -415,64 +412,6 @@ const Register = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <motion.div
-                    initial={{ x: -10, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="group"
-                  >
-                    <label
-                      htmlFor="firstName"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 group-focus-within:text-purple-500 transition-colors"
-                    >
-                      Tên
-                    </label>
-                    <div className="mt-1">
-                      <motion.input
-                        type="text"
-                        name="firstName"
-                        id="firstName"
-                        autoComplete="given-name"
-                        className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white/10 dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 backdrop-blur-md"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        disabled={isProcessing}
-                        placeholder="Nhập tên của bạn"
-                        whileFocus={{ scale: 1.01 }}
-                      />
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ x: 10, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.15 }}
-                    className="group"
-                  >
-                    <label
-                      htmlFor="lastName"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 group-focus-within:text-purple-500 transition-colors"
-                    >
-                      Họ
-                    </label>
-                    <div className="mt-1">
-                      <motion.input
-                        type="text"
-                        name="lastName"
-                        id="lastName"
-                        autoComplete="family-name"
-                        className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white/10 dark:bg-gray-900/50 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 backdrop-blur-md"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        disabled={isProcessing}
-                        placeholder="Nhập họ của bạn"
-                        whileFocus={{ scale: 1.01 }}
-                      />
-                    </div>
-                  </motion.div>
-                </div>
-
                 <motion.div
                   initial={{ y: 10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -677,29 +616,6 @@ const Register = () => {
                     </a>
                   </label>
                 </motion.div>
-
-                <motion.button
-                  type="button"
-                  onClick={handleGoogleSignIn}
-                  disabled={isProcessing}
-                  className="w-full flex items-center justify-center gap-3 py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  whileHover={isProcessing ? {} : { scale: 1.02 }}
-                  whileTap={isProcessing ? {} : { scale: 0.98 }}
-                >
-                  <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M21.35 12.27c0-.73-.07-1.43-.21-2.1H12v3.98h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.91-4.18 2.91-7.27Z" />
-                    <path fill="#34A853" d="M12 21.5c2.63 0 4.84-.87 6.45-2.36l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.7-1.72-5.47-4.03H3.29v2.53A9.75 9.75 0 0 0 12 21.5Z" />
-                    <path fill="#FBBC05" d="M6.53 13.58A5.86 5.86 0 0 1 6.23 12c0-.55.1-1.09.3-1.58V7.89H3.29A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.06 1.04 4.11l3.24-2.53Z" />
-                    <path fill="#EA4335" d="M12 6.39c1.43 0 2.71.49 3.72 1.46l2.79-2.79C16.83 3.48 14.63 2.5 12 2.5a9.75 9.75 0 0 0-8.71 5.39l3.24 2.53c.77-2.31 2.93-4.03 5.47-4.03Z" />
-                  </svg>
-                  Đăng ký bằng Google
-                </motion.button>
-
-                <div className="relative flex items-center py-1" aria-hidden="true">
-                  <div className="flex-grow border-t border-gray-300 dark:border-gray-700" />
-                  <span className="mx-3 text-xs text-gray-500 dark:text-gray-400">hoặc</span>
-                  <div className="flex-grow border-t border-gray-300 dark:border-gray-700" />
-                </div>
 
                 <motion.div
                   initial={{ y: 10, opacity: 0 }}
