@@ -11,9 +11,21 @@ import { API_URL } from "../config/constants";
  */
 export const register = async (userData) => {
   try {
-    const response = await api.post("/auth/register", userData);
+    const response = await api.post("/auth/register", {
+      ...userData,
+      username: userData.username?.trim(),
+      email: userData.email?.trim().toLowerCase(),
+    });
+    const { token, user } = response.data;
+
+    if (token) {
+      localStorage.setItem("token", token);
+    }
+
     return {
       success: true,
+      token,
+      user,
       data: response.data,
     };
   } catch (error) {

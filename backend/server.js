@@ -33,7 +33,7 @@ const isAllowedOrigin = (origin) => {
   if (!origin) return true;
   if (/^https?:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)) return true;
   if (configuredOrigins.includes(origin)) return true;
-  return /^https:\/\/([a-z0-9-]+\.)*vercel\.app$/.test(origin);
+  return /^https:\/\/([a-z0-9-]+\.)*(vercel\.app|v0\.build)$/.test(origin);
 };
 
 const io = socketio(server, {
